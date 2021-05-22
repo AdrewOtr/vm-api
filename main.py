@@ -1,8 +1,7 @@
 from fastapi import FastAPI
-from schemas import Object
 
-
-app = FastAPI()
+import uvicorn
+from routers import department, object
 
 
 app = FastAPI(title="Virtual Microscope API",
@@ -10,20 +9,8 @@ app = FastAPI(title="Virtual Microscope API",
               docs_url="/docs", redoc_url=None)
 
 
-@app.get('/')
-def home():
-    return {"key": "Hello"}
+app.include_router(department.router, prefix="/departments", tags=["departments"])
+app.include_router(object.router, prefix="/objects", tags=["objects"])
 
-
-@app.get('/{pk}')
-def get_item(pk: int, q: str = None):
-    return {"key": pk, "q": q}
-
-
-@app.post('/object')
-def create_entity(item: Object):
-    return item
-
-
-
-# if __name__ == '__main__':
+if __name__ == '__main__':
+    uvicorn.run(app, host="127.0.0.1", port=8000, log_level="debug")

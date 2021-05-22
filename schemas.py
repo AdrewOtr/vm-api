@@ -1,6 +1,6 @@
 from typing import List
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from datetime import date
 
 
@@ -12,21 +12,22 @@ class User(BaseModel):
 
 
 class File(BaseModel):
+    id: str
     url: str
     zoom: int
 
 
 class Object(BaseModel):
-    type: str   # image/model
-    description: str
-    files: List[File]
     id: str
-    name: str
+    title: str
     date: date
+    type: str = Field(description="image/model")
+    description: str = None
+    files: List[File]
 
 
 class Department(BaseModel):
     id: str
-    name: str
+    title: str
     date: date
 

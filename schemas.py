@@ -4,15 +4,11 @@ from pydantic import BaseModel
 from datetime import date
 
 
-class Entity(BaseModel):
+class User(BaseModel):
     id: str
     name: str
     date: date
-
-
-class User(Entity):
     admin: bool
-    entity: Entity
 
 
 class File(BaseModel):
@@ -20,9 +16,17 @@ class File(BaseModel):
     zoom: int
 
 
-class Object(Entity):
+class Object(BaseModel):
     type: str   # image/model
     description: str
     files: List[File]
+    id: str
+    name: str
+    date: date
 
+
+class Department(BaseModel):
+    id: str
+    name: str
+    date: date
 

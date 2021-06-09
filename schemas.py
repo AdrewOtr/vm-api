@@ -13,6 +13,7 @@ class User(BaseModel):
 
 class File(BaseModel):
     id: str
+    type: str = Field(description="image/model")
     url: str
     zoom: int
 
@@ -21,7 +22,7 @@ class Object(BaseModel):
     id: str
     title: str
     date: date
-    type: str = Field(description="image/model")
+    department_id: str
     description: str = None
     files: List[File]
 

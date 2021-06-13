@@ -9,17 +9,17 @@ router = APIRouter()
 
 @router.get('/', response_model=List[Object])
 def get_objects():
-    return List[Object]
+    return
 
 
 @router.get('/{id}', response_model=Object)
 def get_object(id: str):
-    return Object
+    return
 
 
 @router.post('/{title}', response_model=Object)
 def create_object(title: str):
-    return Object
+    return
 
 
 @router.delete('/{id}')

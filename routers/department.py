@@ -1,7 +1,7 @@
 from typing import List
 
 from fastapi import APIRouter
-from schemas import Department
+from schemas import Department, Object
 
 
 router = APIRouter()
@@ -9,17 +9,22 @@ router = APIRouter()
 
 @router.get('/', response_model=List[Department])
 def get_departments():
-    return List[Department]
+    return
 
 
 @router.get('/{id}', response_model=Department)
 def get_department(id: str):
-    return Department
+    return
+
+
+@router.get('/{id}/objects', response_model=List[Object])
+def get_department_objects(id: str):
+    return
 
 
 @router.post('/{title}', response_model=Department)
 def create_department(title: str):
-    return Department
+    return
 
 
 @router.delete('/{id}')

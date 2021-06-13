@@ -2,6 +2,10 @@ from fastapi import FastAPI
 
 import uvicorn
 from routers import department, object
+import models
+from models.database import engine
+
+models.database.Base.metadata.create_all(bind=engine)
 
 
 app = FastAPI(title="Virtual Microscope API",

@@ -1,8 +1,8 @@
 from typing import List
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends, HTTPException
 from schemas import Object
-
+from models.database import Session
 
 router = APIRouter()
 
@@ -14,7 +14,9 @@ def get_objects():
 
 @router.get('/{id}', response_model=Object)
 def get_object(id: str):
-    return
+    session = Session()
+    object_out = session.query(Object).filter(Object.id == id)
+    return object_out
 
 
 @router.post('/{title}', response_model=Object)

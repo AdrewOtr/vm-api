@@ -1,4 +1,5 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, func, String
+from sqlalchemy.dialects.postgresql import UUID, TIMESTAMP
 from sqlalchemy.orm import relationship
 
 from models.database import Base
@@ -7,10 +8,7 @@ from models.database import Base
 class Department(Base):
     __tablename__ = 'department'
 
-    id = Column(Integer, primary_key=True)
+    id = Column(UUID, primary_key=True)
     title = Column(String)
-    date = Column(String)
+    date = Column(TIMESTAMP, nullable=True, server_default=func.now())
     object = relationship('Object')
-
-    # def __repr__(self):
-    #     return f'Группа [ID: {self.id}, Название: {self.group_name}]'

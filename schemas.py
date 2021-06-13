@@ -1,3 +1,5 @@
+import datetime
+
 from typing import List
 
 from pydantic import BaseModel, Field
@@ -7,7 +9,7 @@ from datetime import date
 class User(BaseModel):
     id: str
     name: str
-    date: date
+    date: datetime.datetime
     admin: bool
 
 
@@ -16,12 +18,13 @@ class File(BaseModel):
     type: str = Field(description="image/model")
     url: str
     zoom: int
+    date: datetime.datetime
 
 
 class Object(BaseModel):
     id: str
     title: str
-    date: date
+    date: datetime.datetime
     department_id: str
     description: str = None
     files: List[File]
@@ -30,5 +33,4 @@ class Object(BaseModel):
 class Department(BaseModel):
     id: str
     title: str
-    date: date
-
+    date: datetime.datetime

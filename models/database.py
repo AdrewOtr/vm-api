@@ -10,4 +10,3 @@ engine = create_engine(sqlalchemy_database_url, echo=False)
 Session = sessionmaker(bind=engine)
 
 Base = declarative_base()
-

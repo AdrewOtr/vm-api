@@ -7,6 +7,7 @@ from pydantic.generics import GenericModel
 import stringcase
 
 DataT = TypeVar('DataT')
+RefSchemaType = TypeVar("RefSchemaType", bound=BaseModel)
 
 
 def to_camel(string):
@@ -41,19 +42,23 @@ class File(BaseModel):
         orm_mode = True
 
 
+class FileList(GenericModel, CamelCaseModel, Generic[RefSchemaType]):
+    files: List[File] = []
+
+    class Config:
+        orm_mode = True
+
+
 class Object(BaseModel):
     id: Optional[str]
     title: Optional[str]
     date: Optional[datetime.datetime]
     department_id: Optional[str]
     description: Optional[str] = None
-    files: Optional[List[File]] = None
+    files: Optional[FileList[File]] = None
 
     class Config:
         orm_mode = True
-
-
-RefSchemaType = TypeVar("RefSchemaType", bound=BaseModel)
 
 
 class ObjectList(GenericModel, CamelCaseModel, Generic[RefSchemaType]):
@@ -67,6 +72,13 @@ class Department(BaseModel):
     id: Optional[str]
     title: Optional[str]
     date: Optional[datetime.datetime]
+
+    class Config:
+        orm_mode = True
+
+
+class DepartmentList(GenericModel, CamelCaseModel, Generic[RefSchemaType]):
+    departments: List[Department] = []
 
     class Config:
         orm_mode = True

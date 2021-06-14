@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker
 
 sqlalchemy_database_url = f"postgresql://postgres:123@localhost:5432/vm_test"
 
-engine = create_engine(sqlalchemy_database_url, echo=False)
+engine = create_engine(sqlalchemy_database_url, echo=False, pool_size=100, max_overflow=0)
 
 Session = sessionmaker(bind=engine)
 

@@ -5,6 +5,7 @@ from models.database import Base
 
 class File(Base):
     __tablename__ = 'file'
+    __mapper_args__ = dict(polymorphic_identity="file")
 
     id = Column(UUID, primary_key=True)
     type = Column(String, default="image")

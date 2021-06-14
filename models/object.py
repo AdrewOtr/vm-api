@@ -6,6 +6,7 @@ from models.database import Base
 
 class Object(Base):
     __tablename__ = 'object'
+    __mapper_args__ = dict(polymorphic_identity="object")
 
     id = Column(UUID, primary_key=True)
     title = Column(String)

@@ -1,33 +1,80 @@
-from typing import Optional, List
+import datetime
+from typing import Optional, List, Generic, TypeVar
 
 from pydantic import BaseModel, Field
+from pydantic.generics import GenericModel
+
+import stringcase
+
+DataT = TypeVar('DataT')
+
+
+def to_camel(string):
+    return stringcase.camelcase(string)
+
+
+# Use this model as the base for entity base models instead of entity base to eliminate circular imports
+class CamelCaseModel(BaseModel):
+    class Config:
+        alias_generator = to_camel
+        allow_population_by_field_name = True
 
 
 class User(BaseModel):
-    id: str
-    name: str
-    date: str
-    admin: bool
+    id: Optional[str]
+    name: Optional[str]
+    date: Optional[datetime.datetime]
+    admin: Optional[bool]
+
+    class Config:
+        orm_mode = True
 
 
 class File(BaseModel):
-    id: str
-    type: str = Field(description="image/model")
-    url: str
-    zoom: int
-    date: str
+    id: Optional[str]
+    type: Optional[str] = Field(description="image/model")
+    url: Optional[str]
+    zoom: Optional[int]
+    date: Optional[datetime.datetime]
+
+    class Config:
+        orm_mode = True
 
 
 class Object(BaseModel):
-    id: str
-    title: str
-    date: str
-    department_id: str
+    id: Optional[str]
+    title: Optional[str]
+    date: Optional[datetime.datetime]
+    department_id: Optional[str]
     description: Optional[str] = None
-    # files: List[File]
+    files: Optional[List[File]] = None
+
+    class Config:
+        orm_mode = True
+
+
+RefSchemaType = TypeVar("RefSchemaType", bound=BaseModel)
+
+
+class ObjectList(GenericModel, CamelCaseModel, Generic[RefSchemaType]):
+    objects: List[Object] = []
+
+    class Config:
+        orm_mode = True
 
 
 class Department(BaseModel):
-    id: str
-    title: str
-    date: str
+    id: Optional[str]
+    title: Optional[str]
+    date: Optional[datetime.datetime]
+
+    class Config:
+        orm_mode = True
+
+
+# # Generic response wrapper
+# class Payload(GenericModel, Generic[DataT]):
+#     data: Optional[DataT]
+#
+#     class Config:
+#         orm_mode = True

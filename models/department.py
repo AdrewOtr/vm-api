@@ -7,6 +7,7 @@ from models.database import Base
 
 class Department(Base):
     __tablename__ = 'department'
+    __mapper_args__ = dict(polymorphic_identity="department")
 
     id = Column(UUID, primary_key=True)
     title = Column(String)
